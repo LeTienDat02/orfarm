@@ -1,38 +1,101 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import logo from '~/assets/images/header/logo.svg';
+import { useState, useRef, useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Header() {
+    //Reset scrollY
+    const [pathname, setPathName] = useState('/');
+    const oldPage = useRef(pathname);
+
+    useEffect(() => {
+        if (pathname !== oldPage.current) {
+            try {
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    //behavior: 'smooth',
+                });
+            } catch (error) {
+                // for older browser
+                window.scrollTo(0, 0);
+            }
+            oldPage.current = pathname;
+        }
+    }, [pathname]);
+    //End reset
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('container')}>
                 <div className={cx('header-logo')}>
                     <div className="logo">
-                        <Link to="/">
+                        <NavLink exact="true" className={({ isActive }) => (isActive ? cx('active') : null)} to="/">
                             <img src={logo} alt="Orfarm" />
-                        </Link>
+                        </NavLink>
                     </div>
                 </div>
                 <div className={cx('header-menu')}>
                     <ul className={cx('menu')}>
                         <li className={cx('item')}>
-                            <Link to="/">Trang Chủ</Link>
+                            <NavLink
+                                exact="true"
+                                className={({ isActive }) => (isActive ? cx('active') : null)}
+                                onClick={() => {
+                                    setPathName('/');
+                                }}
+                                to="/"
+                            >
+                                Trang Chủ
+                            </NavLink>
                         </li>
                         <li className={cx('item')}>
-                            <Link to="/cuahang">Cửa Hàng</Link>
+                            <NavLink
+                                className={({ isActive }) => (isActive ? cx('active') : null)}
+                                onClick={() => {
+                                    setPathName('/cuahang');
+                                }}
+                                to="/cuahang"
+                            >
+                                Cửa Hàng
+                            </NavLink>
                         </li>
                         <li className={cx('item')}>
-                            <Link to="/blog">Blog</Link>
+                            <NavLink
+                                className={({ isActive }) => (isActive ? cx('active') : null)}
+                                onClick={() => {
+                                    setPathName('/blog');
+                                }}
+                                to="/blog"
+                            >
+                                Blog
+                            </NavLink>
                         </li>
                         <li className={cx('item')}>
-                            <Link to="/gioithieu">Giới Thiệu</Link>
+                            <NavLink
+                                className={({ isActive }) => (isActive ? cx('active') : null)}
+                                onClick={() => {
+                                    setPathName('/gioithieu');
+                                }}
+                                to="/gioithieu"
+                            >
+                                Giới Thiệu
+                            </NavLink>
                         </li>
                         <li className={cx('item')}>
-                            <Link to="/lienhe">Liên Hệ</Link>
+                            <NavLink
+                                className={({ isActive }) => (isActive ? cx('active') : null)}
+                                onClick={() => {
+                                    setPathName('/lienhe');
+                                }}
+                                to="/lienhe"
+                            >
+                                Liên Hệ
+                            </NavLink>
                         </li>
                     </ul>
                 </div>

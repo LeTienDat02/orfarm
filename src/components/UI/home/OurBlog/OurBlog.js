@@ -17,7 +17,7 @@ function OurBlog() {
             <div className={cx('list-blog')}>
                 {listBlog.map((blog, index) => {
                     return (
-                        <div className={cx('item-blog')}>
+                        <div key={index} className={cx('item-blog')}>
                             <Blog
                                 key={index}
                                 img={blog.img}

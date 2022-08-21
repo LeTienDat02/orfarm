@@ -3,38 +3,40 @@ import classNames from 'classnames/bind';
 import Product from '../../Product';
 import { Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
-import { listAll, listMeat, listVegetables, listSnack } from '~/constansts/home/ourProduct';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function OurProduct() {
     // Control render list product
-
     const [list, setList] = useState('all');
+    const [productInList, setProductInList] = useState([]);
 
-    let listType = [];
-
-    if (list === 'all') listType = listAll;
-    else if (list === 'meat') listType = listMeat;
-    else if (list === 'vegetables') listType = listVegetables;
-    else listType = listSnack;
+    useEffect(() => {
+        fetch(`http://localhost:3000/our-product/${list}`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((res) => {
+                setProductInList(res.product);
+            });
+    }, [list]);
 
     const handleRenderList = (nameType) => {
         setList(nameType);
     };
-
     //End control render list product
 
     // Control move product in list
     const [i, setI] = useState(0);
+    const numberProduct = 6; //Number product will render
 
     const handleLeft = () => {
         if (i === 0) setI(0);
         else setI(i - 1);
     };
     const handleRight = () => {
-        if (i + 5 === listType.length - 1) setI(listType.length - 6);
+        if (i + numberProduct - 1 === productInList.length - 1) setI(productInList.length - numberProduct);
         else setI(i + 1);
     };
     // End control move product in list
@@ -45,35 +47,59 @@ function OurProduct() {
                 <h3>Các Mặt Hàng Hấp Dẫn</h3>
             </div>
             <ul className={cx('control-list')}>
-                <li className={cx({ focus: 'all' === list })} onClick={() => handleRenderList('all')}>
+                <li
+                    className={cx({ focus: 'all' === list })}
+                    onClick={() => {
+                        handleRenderList('all');
+                        setI(0);
+                    }}
+                >
                     Tất Cả Sản Phẩm
                 </li>
-                <li className={cx({ focus: 'meat' === list })} onClick={() => handleRenderList('meat')}>
+                <li
+                    className={cx({ focus: 'meat' === list })}
+                    onClick={() => {
+                        handleRenderList('meat');
+                        setI(0);
+                    }}
+                >
                     Thịt Tươi Sống
                 </li>
-                <li className={cx({ focus: 'vegetables' === list })} onClick={() => handleRenderList('vegetables')}>
+                <li
+                    className={cx({ focus: 'vegetables' === list })}
+                    onClick={() => {
+                        handleRenderList('vegetables');
+                        setI(0);
+                    }}
+                >
                     Rau Sạch
                 </li>
-                <li className={cx({ focus: 'snack' === list })} onClick={() => handleRenderList('snack')}>
+                <li
+                    className={cx({ focus: 'snack' === list })}
+                    onClick={() => {
+                        handleRenderList('snack');
+                        setI(0);
+                    }}
+                >
                     Bánh Quy Snack
                 </li>
             </ul>
             <div className={cx('list-product')}>
-                {listType.length > 5 && (
-                    <div onClick={handleLeft} className={cx('control-left', 'control')}>
+                {productInList.length > numberProduct - 1 && (
+                    <button onClick={handleLeft} className={cx('control-left', 'control')}>
                         <FeatherIcon className={cx('icon')} icon="chevron-left" />
-                    </div>
+                    </button>
                 )}
 
-                {listType.length > 5 && (
-                    <div onClick={handleRight} className={cx('control-right', 'control')}>
+                {productInList.length > numberProduct - 1 && (
+                    <button onClick={handleRight} className={cx('control-right', 'control')}>
                         <FeatherIcon className={cx('icon')} icon="chevron-right" />
-                    </div>
+                    </button>
                 )}
 
-                {listType.map((product, index) => {
+                {productInList.map((product, index) => {
                     if (index < i) return null;
-                    else if (index >= i + 6) return null;
+                    else if (index >= i + numberProduct) return null;
                     return (
                         <Product
                             key={index}

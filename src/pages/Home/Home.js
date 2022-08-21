@@ -41,12 +41,12 @@ function Home() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container-ads')}>
-                <div onClick={handleCLickLeft} className={cx('control-left', 'control')}>
+                <button onClick={handleCLickLeft} className={cx('control-left', 'control')}>
                     <FeatherIcon className={cx('icon')} icon="chevron-left" />
-                </div>
-                <div onClick={handleCLickRight} className={cx('control-right', 'control')}>
+                </button>
+                <button onClick={handleCLickRight} className={cx('control-right', 'control')}>
                     <FeatherIcon className={cx('icon')} icon="chevron-right" />
-                </div>
+                </button>
                 {listAds.map((ads, index) => {
                     return (
                         adsCount === index && <Ads key={index} src={ads.src} title={ads.title} content={ads.content} />

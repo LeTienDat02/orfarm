@@ -60,8 +60,10 @@
             color: #ffffff;
             z-index: 2;
             display: none;
+            border: none;
             &:hover {
                 background: var(--color-text-title);
+                cursor: pointer;
             }
         }
         .control-left {

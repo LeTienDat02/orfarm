@@ -1,14 +1,14 @@
 .product {
-    max-width: 300px;
     height: 100%;
     padding: 10px 10px;
     background-color: rgba(0, 0, 0, 0);
-    animation: swapList 0.5s linear;
+    animation: swapList 0.3s ease;
+    width: 100%;
     .product-content {
         background-color: #fff;
         width: 100%;
         height: 100%;
-        padding: 20px;
+        padding: 20px 20px 30px 20px;
         border-radius: 10px;
         position: relative;
         border: 1px solid #e6eaf0;
@@ -119,8 +119,8 @@
             border-radius: 10px;
             margin-top: 15px;
             position: absolute;
-            bottom: -14rem;
-            right: 0px;
+            bottom: -13rem;
+            right: -1px;
             left: 0px;
             padding: 0 20px 15px 20px;
             background: #fff;
@@ -172,7 +172,7 @@
 }
 @keyframes swapList {
     from {
-        transform: translateY(-50%);
+        transform: translateY(-30%);
     }
     to {
         transform: translateY(0);
